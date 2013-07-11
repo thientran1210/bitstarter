@@ -22,6 +22,7 @@ References:
 */
 
 var fs = require('fs');
+var request = require('request');
 var program = require('commander');
 var cheerio = require('cheerio');
 var HTMLFILE_DEFAULT = "index.html";
@@ -41,6 +42,10 @@ var cheerioHtmlFile = function(htmlfile) {
     return cheerio.load(fs.readFileSync(htmlfile));
 };
 
+var cheerioLink = function(link){
+	return cheerio.load(request(link));
+};
+
 var loadChecks = function(checksfile) {
     return JSON.parse(fs.readFileSync(checksfile));
 };
@@ -57,7 +62,7 @@ var checkHtmlFile = function(htmlfile, checksfile) {
 };
 
 var checkLink = function(link, checksfile){
-    $ = cheerioHtml(link);
+    $ = cheerioLink(link);
     var checks = loadChecks(checksfile).sort();
     var out = {};
     for(var ii in checks) {
