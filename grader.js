@@ -80,6 +80,7 @@ if(require.main == module) {
         .option('-u, --url <link>', 'blah',LINK_DEFAULT)
         .parse(process.argv);
     var checkJson = checkHtmlFile(program.file, program.checks);
+	var checkJson1 = checkLink(program.link,program.checks);
     var outJson = JSON.stringify(checkJson, null, 4);
     console.log(outJson);
 } else {
